@@ -1,11 +1,15 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'maven:3.8.4-openjdk-17'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Compile et package l'application
+                    // Compile et package l'application avec Maven
                     sh 'mvn clean package'
                 }
             }
@@ -28,3 +32,4 @@ pipeline {
         }
     }
 }
+
